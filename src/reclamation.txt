@@ -1,0 +1,10 @@
+456;Sous-sol (Ghazela);Retard;kjfds;456;Haute;2024-12-15;20241215000112
+528;Etagier (Centre vil;Service;je suis fatigué;12345679;Haute;;20241215013244
+963;Sous-sol (Ghazela);Retard;je hhfdg;369;Moyenne;15-12-2024;20241215031128
+852;Sous-sol (Ghazela);Retard;azertyuiop;258;Moyenne;15-12-2024;20241215115700
+145632;privé (Lac1);Service;toujours en retard, toujours ferme, service nulle etc etc etc etc etc;369852;Haute;28-12-2024;20241215141037
+6548;Sous-sol (Ghazela);Retard;gzhisdifgqhshsqhmgjhsdqhgjhdsqkjgqdskjgkjsdgqkhqkdsghsdqghs;25;Haute;15-12-2024;20241215141111
+456;Sous-sol (Ghazela);Retard;fgeahgfa;1236;Moyenne;15-12-2024;20241215150154
+123;Sous-sol (Ghazela);Service;sjdvh;12345679;Basse;<V;20241218000939
+123;Sous-sol (Ghazela);Service;sjdvh;12345679;Basse;<V;20241218000939
+123;privé (Lac1);Service;jhdfjd;12345678;Moyenne;18/12/2024;20241218005122

@@ -1,0 +1,7 @@
+123 ; privé (Lac1) ; Trés Insatisfait
+123456 ; privé (Lac1) ; Insatisfait
+123 ; privé (Lac1) ; Trés Satisfait ; sous la date : 2024-12-13 16:26:02
+123 ; privé (Lac1) ; Insatisfait ; sous la date : 2024-12-13 23:31:26
+a123 ; Sous-sol (Ghazela) ; Neutre ; sous la date : 2024-12-17 22:45:31
+123 ; Sous-sol (Ghazela) ; Satisfait ; sous la date : 2024-12-17 23:41:09
+1234 ;  ; Neutre ; sous la date : 2024-12-18 00:38:58

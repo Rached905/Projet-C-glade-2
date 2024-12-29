@@ -1,0 +1,284 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <gtk/gtk.h>
+
+#include "avis.h"
+#include "callbacks.h"
+#include "interface.h"
+#include "support.h"
+#include "greeting.h"
+
+int urgenceLevel,z,a;  // Changed from Urgence
+Reclamation r;
+char fichier[] = "reclamation.txt";
+void on_RHbuttonG__rerCompteCitoyen_clicked(GtkButton *button, gpointer user_data) {
+    // Implementation for this callback (if any)
+}
+
+void on_RHbuttonG__rerReservationCitoyen_clicked(GtkButton *button, gpointer user_data) {
+    // Implementation for this callback (if any)
+}
+
+void on_RHbuttonAvis_ReclamationCitoyen_clicked(GtkButton *button, gpointer user_data) {
+    // Implementation for this callback (if any)
+}
+
+void on_RHbuttonEnregistrerAjouterReclamation_clicked(GtkWidget *button, gpointer user_data) {
+GtkWidget *objet_graphique;
+GtkBuilder *builder = GTK_BUILDER(user_data);
+    GtkWidget *Id, *comboNom, *comboSujet, *descr, *Cin, *message;
+	GtkWidget *radioBasse, *radioMoyenne, *radioHaute;
+    char id[15]; int cin;
+    char nom[20], sujet[30], msg[100] = "Votre reclamation à été bien ajoutée ! Merci pour votre confiance.", description[100];
+    
+
+  /* RHentryIdClientAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHentryIdClientAjouterReclamation"));
+    RHcomboboxNomParkingAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHcomboboxNomParkingAjouterReclamation"));
+    RHcomboboxSujetAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHcomboboxSujetAjouterReclamation"));
+    RHentryDescriptionAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHentryDescriptionAjouterReclamation"));
+    RHentryCINAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHentryCINAjouterReclamation"));
+    RHlabelMsgEnregistrementAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHlabelMsgEnregistrementAjouterReclamation"));
+
+    RHradiobuttonBasseUrgenceAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHradiobuttonBasseUrgenceAjouterReclamation"));
+    RHradiobuttonMoyenneUrgenceAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHradiobuttonMoyenneUrgenceAjouterReclamation"));
+    RHradiobuttonHauteUrgenceAjouterReclamation = GTK_WIDGET(gtk_builder_get_object(builder, "RHradiobuttonHauteUrgenceAjouterReclamation"));
+
+    if (!RHentryIdClientAjouterReclamation || !RHcomboboxNomParkingAjouterReclamation || !RHcomboboxSujetAjouterReclamation || !RHentryDescriptionAjouterReclamation || !RHentryCINAjouterReclamation || !RHlabelMsgEnregistrementAjouterReclamation) {
+        g_print("Erreur: Un ou plusieurs widgets sont NULL\n");
+        return;
+    }*/
+
+	Id = lookup_widget(button,"RHentryIdClientAjouterReclamation");
+	comboNom = lookup_widget(objet_graphique,"RHcomboboxNomParkingAjouterReclamation");
+	comboSujet = lookup_widget(objet_graphique,"RHcomboboxSujetAjouterReclamation");
+	descr = lookup_widget(button,"RHentryDescriptionAjouterReclamation");
+	Cin = lookup_widget(button,"RHentryCINAjouterReclamation");
+	message = lookup_widget(button,"RHlabelMsgEnregistrementAjouterReclamation");
+
+    // Get data from GTK entries
+   // id = atoi(gtk_entry_get_text(GTK_ENTRY(RHentryIdClientAjouterReclamation)));
+    strcpy(r.ID,gtk_entry_get_text(GTK_ENTRY(Id)));
+    strcpy(r.Nom_du_parking,gtk_combo_box_get_active_text(GTK_COMBO_BOX(comboNom)));
+	
+   /* if(strcmp("Sous-sol (Ghazela)",gtk_combo_box_get_active_text(GTK_COMBO_BOX(RHcomboboxNomParkingAjouterReclamation)))==0)
+    nom=1;
+    else if(strcmp("Etagier (Centre ville)",gtk_combo_box_get_active_text(GTK_COMBO_BOX(RHcomboboxNomParkingAjouterReclamation)))==0)
+    nom=2;
+    else 
+    nom=3; */
+
+    strcpy(r.Sujet,gtk_combo_box_get_active_text(GTK_COMBO_BOX(comboSujet)));
+	
+
+/*    if(strcmp("Retard",gtk_combo_box_get_active_text(GTK_COMBO_BOX(RRHcomboboxSujetAjouterReclamation)))==0)
+    sujet=1;
+    else if(strcmp("Service",gtk_combo_box_get_active_text(GTK_COMBO_BOX(RHcomboboxSujetAjouterReclamation)))==0)
+    sujet=2;
+    else 
+    sujet=3; */
+    strcpy(r.Description_du_probleme, gtk_entry_get_text(GTK_ENTRY(descr)));
+    r.CIN = atoi(gtk_entry_get_text(GTK_ENTRY(Cin)));
+
+    // Ajouter le niveau d'urgence en texte
+    if (urgenceLevel == 1) {
+        {strcpy(r.Urgence,"Basse");}
+    } else if (urgenceLevel == 2) {
+	{strcpy(r.Urgence,"Moyenne");}
+    } else if (urgenceLevel == 3) {
+        {strcpy(r.Urgence,"Haute");}
+    } /*else {
+        fprintf(file, "Urgence inconnue\n");
+    }*/
+
+if (comboNom != NULL) {
+        gchar *selected_text = gtk_combo_box_get_active_text(GTK_COMBO_BOX(comboNom));
+
+
+	        if (selected_text != NULL) {
+            // Affiche le genre sélectionné dans la console (debug)
+            g_print("Nom parking sélectionné : %s\n", selected_text);
+
+            // Copie le genre sélectionné dans la structure c
+            strcpy(r.Nom_du_parking, selected_text);
+
+            g_free(selected_text);
+        } else {
+            // Aucune option sélectionnée dans la combobox
+            // Faites quelque chose en conséquence
+           z=0;
+        }
+
+if (comboSujet != NULL) {
+        gchar *selected_text = gtk_combo_box_get_active_text(GTK_COMBO_BOX(comboSujet));
+
+
+	        if (selected_text != NULL) {
+            // Affiche le genre sélectionné dans la console (debug)
+            g_print("Sujet reclamation sélectionné : %s\n", selected_text);
+
+            // Copie le genre sélectionné dans la structure c
+            strcpy(r.Sujet, selected_text);
+
+            g_free(selected_text);
+        } else {
+            // Aucune option sélectionnée dans la combobox
+            // Faites quelque chose en conséquence
+           a=0;
+        }
+
+    // Initialize the Reclamation struct
+    //sprintf(r.ID, "%d", id); // Convert integer ID to string
+  /*  strcpy(r.ID, id);
+    strcpy(r.Nom_du_parking, nom);
+    strcpy(r.Sujet, sujet);
+    strcpy(r.Description_du_probleme, description);
+    r.CIN = cin;
+    r.Urgence = urgenceLevel;*/  // Using updated variable name
+
+    // Call the functions to add the reclamation and handle urgency
+  if  (AjouterAvecUrgence("reclamation.txt", r, urgenceLevel)) { 
+gtk_label_set_text(GTK_LABEL(message), msg);
+    } else {
+        gtk_label_set_text(GTK_LABEL(message), "Erreur lors de l'ajout de la réclamation.");
+    }
+  //urgence(fichier, urgenceLevel);
+}
+//    urgence(fichier, urgenceLevel);
+
+    // Set the message label text
+  //  gtk_label_set_text(GTK_LABEL(RHlabelMsgEnregistrementAjouterReclamation), msg);
+//}
+
+void on_RHbuttonEnregistrerModifierReclamation_clicked(GtkWidget *button, gpointer user_data) {
+/*GtkWidget *objet_graphique;
+	GtkWidget *RHentryIdReclamationModifierReclamation, *RHspinbuttonJoursModifierReclamation, *RHspinbuttonMoisModifierReclamation, *RHspinbuttonAnneModifierReclamation, *RHcomboboxentrySelectionneModifierReclamation, *RHlabelMsgModificationReclamation;
+
+    char id[15]; Date dt_res;
+    char nom[20], sujet[50], msg[100] = "Votre reclamation à été bien modifier ! Merci pour votre confiance.", description[100];
+    char fichier[] = "reclamation.txt";
+    int i;
+
+    RHentryIdReclamationModifierReclamation = lookup_widget(button, "RHentryIdReclamationModifierReclamation");
+    RHspinbuttonJoursModifierReclamation = lookup_widget(objet_graphique, "RHspinbuttonJoursModifierReclamation");
+    RHspinbuttonMoisModifierReclamation = lookup_widget(objet_graphique, "RHspinbuttonMoisModifierReclamation");
+    RHspinbuttonAnneModifierReclamation = lookup_widget(objet_graphique, "RHspinbuttonAnneModifierReclamation");
+    RHcomboboxentrySelectionneModifierReclamation = lookup_widget(button, "RHcomboboxentrySelectionneModifierReclamation");
+
+// Récupérer l'ID de la réclamation à modifier
+    strcpy(id, gtk_entry_get_text(GTK_ENTRY(RHentryIdReclamationModifierReclamation)));
+
+    // Récupérer la date de résolution
+    dt_res.jour = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(RHspinbuttonJoursModifierReclamation));
+    dt_res.mois = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(RHspinbuttonMoisModifierReclamation));
+    dt_res.annee = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(RHspinbuttonAnneModifierReclamation));
+
+    // Récupérer la description de la réclamation (si nécessaire)
+    strcpy(description, gtk_entry_get_text(GTK_ENTRY(RHcomboboxentrySelectionneModifierReclamation))); 
+
+    // Créer une structure Reclamation avec les nouvelles informations
+    Reclamation nouvrec;
+    strcpy(nouvrec.Description_du_probleme, description); 
+    nouvrec.dt_res = dt_res; 
+
+    // Appeler la fonction de modification
+    if ( Modifier(fichier, id, nouvrec) ) {
+        gtk_label_set_text(GTK_LABEL(RHlabelMsgModificationReclamation), msg); 
+    } else {
+        gtk_label_set_text(GTK_LABEL(RHlabelMsgModificationReclamation), "Erreur lors de la modification de la réclamation.");
+    }
+*/}
+
+void on_RHbuttonSupprimerReclamation_clicked(GtkButton *button, gpointer user_data) {
+    // Implementation for this callback (if any)
+}
+
+void on_RHradiobuttonBasseUrgenceAjouterReclamation_toggled(GtkToggleButton *togglebutton, gpointer user_data) {
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton))) {
+        urgenceLevel = 1;
+    }
+}
+
+void on_RHradiobuttonMoyenneUrgenceAjouterReclamation_toggled(GtkToggleButton *togglebutton, gpointer user_data) {
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton))) {
+        urgenceLevel = 2;
+    }
+}
+
+void on_RHradiobuttonHauteUrgenceAjouterReclamation_toggled(GtkToggleButton *togglebutton, gpointer user_data) {
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton))) {
+        urgenceLevel = 3;
+    }
+}
+
+int choix []={0,0,0,0,0};
+void
+on_RHcheckbutton1_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if (gtk_toggle_button_get_active(togglebutton))
+{choix [0]=1; }
+else choix[0]=0;
+
+}
+
+
+void
+on_RHcheckbutton2_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if (gtk_toggle_button_get_active(togglebutton))
+{choix [1]=1; }
+else choix[1]=0;
+}
+
+
+void
+on_RHcheckbutton3_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if (gtk_toggle_button_get_active(togglebutton))
+{choix [2]=1; }
+else choix[2]=0;
+}
+
+
+void
+on_RHcheckbutton4_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if (gtk_toggle_button_get_active(togglebutton))
+{choix [3]=1; }
+else choix[3]=0;
+}
+
+
+void
+on_RHcheckbutton5_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if (gtk_toggle_button_get_active(togglebutton))
+{choix [4]=1; }
+else choix[4]=0;
+}
+
+
+void
+on_RHbuttonEnregistrementAvis_clicked  (GtkWidget       *button,
+                                        gpointer         user_data)
+{ 
+//GtkWidget *objet_graphique;
+
+//	int choix=1;
+//	char msg[100]="";
+
+//	GtkWidget *RHlabelMsgEnregistrementAvis;
+	
+//	RHlabelMsgEnregistrementAvis=lookup_widget(button,"RHlabelMsgEnregistrementAvis");
+
+//	Avis ("avis.txt", choix, msg);
+
+//	gtk_label_set_text(GTK_LABEL(RHlabelMsgEnregistrementAvis),msg);
+}
+
